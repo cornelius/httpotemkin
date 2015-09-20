@@ -1,7 +1,8 @@
 FROM opensuse
 
-RUN zypper -n in ruby
-RUN gem install sinatra
+RUN zypper --non-interactive install ruby
+RUN zypper --non-interactive install ca-certificates-mozilla
+RUN gem install --no-document sinatra
 
 COPY server.rb /
 
