@@ -1,4 +1,5 @@
 FROM opensuse
+MAINTAINER Cornelius Schumacher <schumacher@kde.org>
 
 RUN zypper --non-interactive install ruby
 RUN zypper --non-interactive install ca-certificates-mozilla
