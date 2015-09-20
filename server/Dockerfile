@@ -6,6 +6,6 @@ RUN gem install --no-document sinatra
 
 COPY server.rb /
 
-CMD /server.rb
+CMD /server.rb -p 80
 
-EXPOSE 4567
+EXPOSE 80
