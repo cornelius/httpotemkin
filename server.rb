@@ -3,13 +3,13 @@
 require "sinatra"
 
 get '/' do
-  "Jups"
+  "Jups\n"
 end
 
 get "/hello" do
-  "world"
+  "world\n"
 end
 
 get "/*" do
-  "all the rest"
+  "all the rest\n"
 end
