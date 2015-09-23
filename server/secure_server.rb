@@ -17,6 +17,8 @@ webrick_options = {
 }
 
 class SecureServer < Sinatra::Base
+  set :bind, "0.0.0.0"
+
   get "/" do
     "jupss\n"
   end
