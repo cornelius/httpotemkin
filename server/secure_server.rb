@@ -1,27 +1,33 @@
 #!/usr/bin/ruby
 
-require "sinatra/base"
-require "webrick"
-require "webrick/https"
-require "openssl"
+require "sinatra"
+require "thin"
 
-certificate = File.read("server.crt")
-key = File.read("server.key")
-
-webrick_options = {
-  Port: 4568,
-  SSLEnable: true,
-  SSLVerifyClient: OpenSSL::SSL::VERIFY_NONE,
-  SSLCertificate: OpenSSL::X509::Certificate.new(certificate),
-  SSLPrivateKey: OpenSSL::PKey::RSA.new(key)
-}
-
-class SecureServer < Sinatra::Base
-  set :bind, "0.0.0.0"
-
-  get "/" do
-    "jupss\n"
+class SecureServer < ::Thin::Backends::TcpServer
+  def initialize(host, port, options)
+    super(host, port)
+    @ssl = true
+    @ssl_options = options
   end
 end
 
-Rack::Handler::WEBrick.run(SecureServer, webrick_options)
+configure do
+  set :environment, :production
+  set :bind, '0.0.0.0'
+  set :port, 4568
+  set :server, "thin"
+  class << settings
+    def server_settings
+      {
+        :backend          => SecureServer,
+        :private_key_file => File.dirname(__FILE__) + "/server.key",
+        :cert_chain_file  => File.dirname(__FILE__) + "/server.crt",
+        :verify_peer      => false
+      }
+    end
+  end
+end
+
+get '/' do
+  "Hopss\n"
+end
