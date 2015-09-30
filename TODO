@@ -1,0 +1,5 @@
+# To do
+
+* Don't recreate certificates when they are already there
+* Capture output of test and compare it with reference
+* Capture output of servers
