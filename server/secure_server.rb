@@ -14,7 +14,7 @@ end
 configure do
   set :environment, :production
   set :bind, '0.0.0.0'
-  set :port, 4568
+  set :port, 443
   set :server, "thin"
   class << settings
     def server_settings

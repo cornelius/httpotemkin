@@ -16,4 +16,4 @@ COPY secure_server.rb /
 CMD /server.rb -p 80
 
 EXPOSE 80
-EXPOSE 4568
+EXPOSE 443
