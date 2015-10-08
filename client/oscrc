@@ -1,0 +1,7 @@
+[general]
+
+apiurl = https://api.opensuse.org
+
+[https://api.opensuse.org]
+user = myuser
+pass = mypassword

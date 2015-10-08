@@ -13,11 +13,18 @@ end
 run("docker build -t server server")
 
 
-run("openssl req -x509 -newkey rsa:2048 -keyout rubygems/server.key -out rubygems/server.crt -days 1000 -nodes -subj '/CN=api.rubygems.org'")
+run("openssl req -x509 -newkey rsa:2048 -keyout rubygems/server.key -out rubygems/server.crt -days 1000 -nodes -subj '/CN=rubygems.org'")
 
 FileUtils.copy("rubygems/server.crt", "client/certificates/rubygems.crt")
 
 run("docker build -t rubygems rubygems")
+
+
+run("openssl req -x509 -newkey rsa:2048 -keyout api.rubygems/server.key -out api.rubygems/server.crt -days 1000 -nodes -subj '/CN=api.rubygems.org'")
+
+FileUtils.copy("api.rubygems/server.crt", "client/certificates/api.rubygems.crt")
+
+run("docker build -t api.rubygems api.rubygems")
 
 
 run("openssl req -x509 -newkey rsa:2048 -keyout obs/server.key -out obs/server.crt -days 1000 -nodes -subj '/CN=api.opensuse.org'")
