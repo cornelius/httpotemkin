@@ -10,30 +10,26 @@ def run(cmd)
   end
 end
 
-run("docker build -t server server")
+def build_image(name)
+  run("docker build -t #{name} #{name}")
+end
+
+def build_api_image(image_name, server_name)
+  run("openssl req -x509 -newkey rsa:2048 -keyout #{image_name}/server.key -out #{image_name}/server.crt -days 1000 -nodes -subj '/CN=#{server_name}'")
+
+  FileUtils.copy("#{image_name}/server.crt", "client/certificates/#{image_name}.crt")
+
+  run("docker build -t #{image_name} #{image_name}")
+end
 
 
-run("openssl req -x509 -newkey rsa:2048 -keyout rubygems/server.key -out rubygems/server.crt -days 1000 -nodes -subj '/CN=rubygems.org'")
+build_image("server")
 
-FileUtils.copy("rubygems/server.crt", "client/certificates/rubygems.crt")
+build_api_image("rubygems", "rubygems.org")
+build_api_image("api.rubygems", "api.rubygems.org")
+build_api_image("obs", "api.opensuse.org")
 
-run("docker build -t rubygems rubygems")
+build_image("client")
 
-
-run("openssl req -x509 -newkey rsa:2048 -keyout api.rubygems/server.key -out api.rubygems/server.crt -days 1000 -nodes -subj '/CN=api.rubygems.org'")
-
-FileUtils.copy("api.rubygems/server.crt", "client/certificates/api.rubygems.crt")
-
-run("docker build -t api.rubygems api.rubygems")
-
-
-run("openssl req -x509 -newkey rsa:2048 -keyout obs/server.key -out obs/server.crt -days 1000 -nodes -subj '/CN=api.opensuse.org'")
-
-FileUtils.copy("obs/server.crt", "client/certificates/obs.crt")
-
-run("docker build -t obs obs")
-
-
-run("docker build -t client client")
 
 puts "Success."

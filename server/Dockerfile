@@ -7,9 +7,6 @@ RUN zypper --non-interactive install ca-certificates-mozilla
 RUN zypper --non-interactive install curl
 RUN gem install --no-document sinatra thin
 
-COPY server.crt /
-COPY server.key /
-
 COPY server.rb /
 COPY secure_server.rb /
 
