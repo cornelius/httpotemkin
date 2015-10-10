@@ -23,8 +23,7 @@ links = servers.map { |name, server| "--link #{name}:#{server}" }.join(" ")
 run("docker run #{links} client")
 
 servers.keys.each do |name|
-  run("docker kill #{name}")
-  run("docker rm #{name}")
+  run("docker rm -f #{name}")
 end
 
 puts "Success."
