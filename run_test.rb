@@ -8,19 +8,23 @@ def run(cmd)
   end
 end
 
-run("docker run --name=rubygems -d rubygems")
-run("docker run --name=api.rubygems -d api.rubygems")
-run("docker run --name=obs -d obs")
+servers = {
+  "rubygems" => "rubygems.org",
+  "api.rubygems" => "api.rubygems.org",
+  "obs" => "api.opensuse.org"
+}
+
+servers.keys.each do |name|
+  run("docker run --name=#{name} -d #{name}")
+end
 sleep 3
 
-run("docker run --link rubygems:rubygems.org --link api.rubygems:api.rubygems.org --link obs:api.opensuse.org client")
+links = servers.map { |name, server| "--link #{name}:#{server}" }.join(" ")
+run("docker run #{links} client")
 
-run("docker kill rubygems")
-run("docker kill api.rubygems")
-run("docker kill obs")
-
-run("docker rm rubygems")
-run("docker rm api.rubygems")
-run("docker rm obs")
+servers.keys.each do |name|
+  run("docker kill #{name}")
+  run("docker rm #{name}")
+end
 
 puts "Success."
