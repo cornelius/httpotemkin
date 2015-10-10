@@ -31,6 +31,7 @@ puts actual_output
 puts "---- End Test ----"
 
 servers.keys.each do |name|
+  run("docker logs #{name} 2>logs/#{name}.log")
   run("docker rm -f #{name}")
 end
 
