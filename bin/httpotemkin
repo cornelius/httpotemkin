@@ -1,0 +1,26 @@
+#!/usr/bin/ruby
+
+cmd = ARGV[0]
+
+if cmd == "status"
+  puts "Status:"
+elsif cmd == "up"
+  puts "Starting containers"
+elsif cmd == "down"
+  puts "Stopping containers"
+else
+  if !cmd
+    STDERR.puts "You need to provide a command"
+  elsif cmd != "help"
+    puts "Unknown command: #{cmd}"
+  end
+
+  puts "Usage: httpotemkin <command>"
+  puts
+  puts "Testing with HTTP mocks based on containers"
+  puts
+  puts "Commands:"
+  puts "  status  - Show status of containers"
+  puts "  up      - Start containers"
+  puts "  down    - Stop containters"
+end
