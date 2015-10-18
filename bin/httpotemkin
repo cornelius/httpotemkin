@@ -23,4 +23,5 @@ else
   puts "  status  - Show status of containers"
   puts "  up      - Start containers"
   puts "  down    - Stop containters"
+  puts "  help    - Show command line help"
 end
