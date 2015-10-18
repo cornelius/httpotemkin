@@ -24,7 +24,7 @@ Commands:
 
   describe "status" do
     it "shows status" do
-      stub_binary("bin/docker")
+      stub_binary("bin/status/docker")
 
       expected_output = <<-EOT
 Status:
@@ -33,6 +33,23 @@ Status:
   obs: up
       EOT
       expect(run_command(args: ["status"])).to exit_with_success(expected_output)
+    end
+  end
+
+  describe "up" do
+    it "shows status" do
+      stub_binary("bin/up/docker")
+
+      expected_output = <<-EOT
+Starting server containers
+docker run --name=rubygems -d rubygems
+123
+docker run --name=api.rubygems -d api.rubygems
+123
+docker run --name=obs -d obs
+123
+      EOT
+      expect(run_command(args: ["up"])).to exit_with_success(expected_output)
     end
   end
 end
