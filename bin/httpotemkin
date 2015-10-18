@@ -45,7 +45,7 @@ elsif cmd == "run"
   servers.keys.each do |name|
     run_docker("run --name=#{name} -d #{name}")
   end
-  sleep 3
+  sleep 3 unless ENV["RUN_BY_RSPEC"]
 
   links = servers.map { |name, server| "--link #{name}:#{server}" }.join(" ")
   cmd = "docker run #{links} client"

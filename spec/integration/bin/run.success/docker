@@ -1,0 +1,7 @@
+#!/usr/bin/ruby
+
+if ARGV.last == "client"
+  3.times do
+    puts "Hopss"
+  end
+end

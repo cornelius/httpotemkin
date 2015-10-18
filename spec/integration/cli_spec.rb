@@ -71,4 +71,64 @@ client
       expect(run_command(args: ["down"])).to exit_with_success(expected_output)
     end
   end
+
+  describe "run" do
+    it "runs test and succeeds" do
+      stub_binary("bin/run.success/docker")
+
+      expected_output = <<-EOT
+Running tests
+docker run --name=rubygems -d rubygems
+docker run --name=api.rubygems -d api.rubygems
+docker run --name=obs -d obs
+docker run --link rubygems:rubygems.org --link api.rubygems:api.rubygems.org --link obs:api.opensuse.org client
+--- Start Test ---
+Hopss
+Hopss
+Hopss
+---- End Test ----
+docker logs rubygems 2>logs/rubygems.log
+docker rm -f rubygems
+docker logs api.rubygems 2>logs/api.rubygems.log
+docker rm -f api.rubygems
+docker logs obs 2>logs/obs.log
+docker rm -f obs
+
+Success.
+      EOT
+      expect(run_command(args: ["run"])).to exit_with_success(expected_output)
+    end
+
+    it "runs test and fails" do
+      stub_binary("bin/run.failure/docker")
+
+      expected_output = <<-EOT
+Running tests
+docker run --name=rubygems -d rubygems
+docker run --name=api.rubygems -d api.rubygems
+docker run --name=obs -d obs
+docker run --link rubygems:rubygems.org --link api.rubygems:api.rubygems.org --link obs:api.opensuse.org client
+--- Start Test ---
+error
+---- End Test ----
+docker logs rubygems 2>logs/rubygems.log
+docker rm -f rubygems
+docker logs api.rubygems 2>logs/api.rubygems.log
+docker rm -f api.rubygems
+docker logs obs 2>logs/obs.log
+docker rm -f obs
+
+Failed.
+
+Expected output:
+Hopss
+Hopss
+Hopss
+
+Actual output:
+error
+      EOT
+      expect(run_command(args: ["run"])).to exit_with_error(1, "", expected_output)
+    end
+  end
 end
