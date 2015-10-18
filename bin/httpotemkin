@@ -19,7 +19,10 @@ cmd = ARGV[0]
 
 if cmd == "status"
   puts "Status:"
-  run_docker("ps")
+  running = `docker ps --format="{{.Names}}"`.split("\n")
+  servers.keys.each do |server|
+    puts "  #{server}: #{running.include?(server) ? "up" : "down"}"
+  end
 elsif cmd == "up"
   puts "Starting server containers"
   servers.keys.each do |server|
