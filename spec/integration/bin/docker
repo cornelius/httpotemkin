@@ -1,0 +1,4 @@
+#!/usr/bin/ruby
+
+puts "rubygems"
+puts "obs"
