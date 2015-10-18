@@ -1,13 +1,76 @@
 #!/usr/bin/ruby
 
+servers = {
+  "rubygems" => "rubygems.org",
+  "api.rubygems" => "api.rubygems.org",
+  "obs" => "api.opensuse.org"
+}
+
+def run_docker(args)
+  cmd = "docker #{args}"
+  puts cmd
+  if !system(cmd)
+    STDERR.puts "Command failed. Exiting."
+    exit 1
+  end
+end
+
 cmd = ARGV[0]
 
 if cmd == "status"
   puts "Status:"
+  run_docker("ps")
 elsif cmd == "up"
-  puts "Starting containers"
+  puts "Starting server containers"
+  servers.keys.each do |server|
+    run_docker("run --name=#{server} -d #{server}")
+  end
 elsif cmd == "down"
-  puts "Stopping containers"
+  puts "Stopping server containers"
+  servers.keys.each do |server|
+    run_docker("rm -f #{server}")
+  end
+  run_docker("rm -f client")
+elsif cmd == "client"
+  links = servers.map { |name, server| "--link #{name}:#{server}" }.join(" ")
+  run_docker("run #{links} client")
+elsif cmd == "run"
+  puts "Running tests"
+
+  expected_output = File.read("expected_output")
+
+  servers.keys.each do |name|
+    run_docker("run --name=#{name} -d #{name}")
+  end
+  sleep 3
+
+  links = servers.map { |name, server| "--link #{name}:#{server}" }.join(" ")
+  cmd = "docker run #{links} client"
+  puts cmd
+
+  puts "--- Start Test ---"
+  actual_output = `#{cmd}`
+  puts actual_output
+  puts "---- End Test ----"
+
+  servers.keys.each do |name|
+    run_docker("logs #{name} 2>logs/#{name}.log")
+    run_docker("rm -f #{name}")
+  end
+
+  puts
+  if actual_output == expected_output
+    puts "Success."
+  else
+    puts "Failed."
+    puts
+    puts "Expected output:"
+    puts expected_output
+    puts
+    puts "Actual output:"
+    puts actual_output
+    exit 1
+  end
 else
   if !cmd
     STDERR.puts "You need to provide a command"
@@ -23,5 +86,7 @@ else
   puts "  status  - Show status of containers"
   puts "  up      - Start containers"
   puts "  down    - Stop containters"
+  puts "  client  - Run client"
+  puts "  run     - Run tests"
   puts "  help    - Show command line help"
 end
