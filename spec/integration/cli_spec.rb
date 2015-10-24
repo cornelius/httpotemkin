@@ -72,6 +72,20 @@ client
     end
   end
 
+  describe "client" do
+    it "runs client" do
+      stub_binary("bin/client/docker")
+
+      expected_output = <<-EOT
+docker run --link rubygems:rubygems.org --link api.rubygems:api.rubygems.org --link obs:api.opensuse.org client
+Hopss
+Hopss
+Hopss
+      EOT
+      expect(run_command(args: ["client"])).to exit_with_success(expected_output)
+    end
+  end
+
   describe "run" do
     it "runs test and succeeds" do
       stub_binary("bin/run.success/docker")
