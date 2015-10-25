@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.rubyforge_project         = 'httpotemkin'
 
   s.add_development_dependency 'rspec', '~> 3.0'
-  s.add_development_dependency 'given_filesystem', '> 0.1.2'
-  s.add_development_dependency 'cli_tester', '> 0.0.2'
+  s.add_development_dependency 'given_filesystem', '>= 0.1.2'
+  s.add_development_dependency 'cli_tester', '>= 0.0.2'
 
   s.files        = `git ls-files`.split("\n")
   s.require_path = 'lib'
