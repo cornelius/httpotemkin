@@ -1,7 +1,5 @@
 # To do
 
-* Stop containers when tests fail
-
 * Create gem
 
 * Don't fail in `down` command when some containers already are down

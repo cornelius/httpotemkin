@@ -12,9 +12,12 @@ module Httpotemkin
     def run
       @containers.up
       @containers.start_client
-      yield Client.new(@containers)
-      @containers.stop_client
-      @containers.down
+      begin
+        yield Client.new(@containers)
+      ensure
+        @containers.stop_client
+        @containers.down
+      end
     end
   end
 end
