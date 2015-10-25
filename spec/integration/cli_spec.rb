@@ -65,8 +65,6 @@ docker rm -f api.rubygems
 api.rubygems
 docker rm -f obs
 obs
-docker rm -f client
-client
       EOT
       expect(run_command(args: ["down"])).to exit_with_success(expected_output)
     end
@@ -77,7 +75,7 @@ client
       stub_binary("bin/client/docker")
 
       expected_output = <<-EOT
-docker run --link rubygems:rubygems.org --link api.rubygems:api.rubygems.org --link obs:api.opensuse.org client
+docker run --link=rubygems:rubygems.org --link=api.rubygems:api.rubygems.org --link=obs:api.opensuse.org client
 Hopss
 Hopss
 Hopss
@@ -95,22 +93,25 @@ Running tests
 docker run --name=rubygems -d rubygems
 docker run --name=api.rubygems -d api.rubygems
 docker run --name=obs -d obs
-docker run --link rubygems:rubygems.org --link api.rubygems:api.rubygems.org --link obs:api.opensuse.org client
+docker run --link=rubygems:rubygems.org --link=api.rubygems:api.rubygems.org --link=obs:api.opensuse.org client
 --- Start Test ---
 Hopss
 Hopss
 Hopss
 ---- End Test ----
-docker logs rubygems 2>logs/rubygems.log
+docker logs rubygems
 docker rm -f rubygems
-docker logs api.rubygems 2>logs/api.rubygems.log
+docker logs api.rubygems
 docker rm -f api.rubygems
-docker logs obs 2>logs/obs.log
+docker logs obs
 docker rm -f obs
 
 Success.
       EOT
       expect(run_command(args: ["run"])).to exit_with_success(expected_output)
+      expect(File.exist?("logs/rubygems.log")).to be(true)
+      expect(File.exist?("logs/api.rubygems.log")).to be(true)
+      expect(File.exist?("logs/obs.log")).to be(true)
     end
 
     it "runs test and fails" do
@@ -121,15 +122,15 @@ Running tests
 docker run --name=rubygems -d rubygems
 docker run --name=api.rubygems -d api.rubygems
 docker run --name=obs -d obs
-docker run --link rubygems:rubygems.org --link api.rubygems:api.rubygems.org --link obs:api.opensuse.org client
+docker run --link=rubygems:rubygems.org --link=api.rubygems:api.rubygems.org --link=obs:api.opensuse.org client
 --- Start Test ---
 error
 ---- End Test ----
-docker logs rubygems 2>logs/rubygems.log
+docker logs rubygems
 docker rm -f rubygems
-docker logs api.rubygems 2>logs/api.rubygems.log
+docker logs api.rubygems
 docker rm -f api.rubygems
-docker logs obs 2>logs/obs.log
+docker logs obs
 docker rm -f obs
 
 Failed.

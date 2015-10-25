@@ -1,65 +1,40 @@
 #!/usr/bin/ruby
 
-servers = {
-  "rubygems" => "rubygems.org",
-  "api.rubygems" => "api.rubygems.org",
-  "obs" => "api.opensuse.org"
-}
+require_relative "../lib/httpotemkin"
 
-def run_docker(args)
-  cmd = "docker #{args}"
-  puts cmd
-  if !system(cmd)
-    STDERR.puts "Command failed. Exiting."
-    exit 1
-  end
-end
+containers = Httpotemkin::Containers.new
+containers.add_server("rubygems")
+containers.add_server("api.rubygems")
+containers.add_server("obs")
 
 cmd = ARGV[0]
 
 if cmd == "status"
   puts "Status:"
-  running = `docker ps --format="{{.Names}}"`.split("\n")
-  servers.keys.each do |server|
-    puts "  #{server}: #{running.include?(server) ? "up" : "down"}"
-  end
+  containers.print_status
 elsif cmd == "up"
   puts "Starting server containers"
-  servers.keys.each do |server|
-    run_docker("run --name=#{server} -d #{server}")
-  end
+  containers.up
 elsif cmd == "down"
   puts "Stopping server containers"
-  servers.keys.each do |server|
-    run_docker("rm -f #{server}")
-  end
-  run_docker("rm -f client")
+  containers.down
 elsif cmd == "client"
-  links = servers.map { |name, server| "--link #{name}:#{server}" }.join(" ")
-  run_docker("run #{links} client")
+  puts containers.run_client
 elsif cmd == "run"
   puts "Running tests"
 
   expected_output = File.read("expected_output")
 
-  servers.keys.each do |name|
-    run_docker("run --name=#{name} -d #{name}")
-  end
+  containers.up
   sleep 3 unless ENV["RUN_BY_RSPEC"]
 
-  links = servers.map { |name, server| "--link #{name}:#{server}" }.join(" ")
-  cmd = "docker run #{links} client"
-  puts cmd
+  actual_output = containers.run_client
 
   puts "--- Start Test ---"
-  actual_output = `#{cmd}`
   puts actual_output
   puts "---- End Test ----"
 
-  servers.keys.each do |name|
-    run_docker("logs #{name} 2>logs/#{name}.log")
-    run_docker("rm -f #{name}")
-  end
+  containers.down(save_logs: true)
 
   puts
   if actual_output == expected_output
