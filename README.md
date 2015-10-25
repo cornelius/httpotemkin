@@ -4,3 +4,6 @@ be used in tests to execute applications in the environment of the mocked APIs.
 This allows to test applications which talk to HTTP APIs without having to
 change them in any way for the tests, so that very high-level system tests can
 be done in a controlled environment suitable for test driven development.
+
+The tests in `spec/system` provide examples of how tests using httpotemkin can
+be written.
