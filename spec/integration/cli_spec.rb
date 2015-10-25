@@ -1,6 +1,7 @@
 require_relative "spec_helper"
 
 include CliTester
+include GivenFilesystemSpecHelpers
 
 describe "command line interface" do
   describe "help" do
@@ -85,6 +86,13 @@ Hopss
   end
 
   describe "run" do
+    use_given_filesystem
+
+    before(:each) do
+      @logs_dir = given_directory
+      ENV["HTTPOTEMKIN_LOGS_DIR"] = @logs_dir
+    end
+
     it "runs test and succeeds" do
       with_stubbed_binary("bin/run.success/docker") do
         expected_output = <<-EOT
@@ -108,9 +116,9 @@ docker rm -f obs
 Success.
         EOT
         expect(run_command(args: ["run"])).to exit_with_success(expected_output)
-        expect(File.exist?("logs/rubygems.log")).to be(true)
-        expect(File.exist?("logs/api.rubygems.log")).to be(true)
-        expect(File.exist?("logs/obs.log")).to be(true)
+        expect(File.exist?(File.join(@logs_dir, "rubygems.log"))).to be(true)
+        expect(File.exist?(File.join(@logs_dir, "api.rubygems.log"))).to be(true)
+        expect(File.exist?(File.join(@logs_dir, "obs.log"))).to be(true)
       end
     end
 

@@ -1,4 +1,5 @@
 require "cli_tester"
+require "given_filesystem/spec_helpers"
 
 ENV["RUN_BY_RSPEC"] = "1"
 

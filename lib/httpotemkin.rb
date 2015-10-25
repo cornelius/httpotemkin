@@ -3,6 +3,7 @@ require "cheetah"
 module Httpotemkin
   class Containers
     attr_accessor :out
+    attr_accessor :log_dir
 
     def initialize
       @servers = []
@@ -14,6 +15,7 @@ module Httpotemkin
       }
       @out = $stdout
       @err = $stderr
+      @log_dir = ENV["HTTPOTEMKIN_LOGS_DIR"] || "logs"
     end
 
     def run_docker(args, options = {})
@@ -47,7 +49,7 @@ module Httpotemkin
     def down(save_logs: false)
       @servers.each do |server|
         if (save_logs)
-          log_file = File.open("logs/#{server}.log", "w")
+          log_file = File.open(File.join(@log_dir,"#{server}.log"), "w")
           run_docker(["logs", server], stderr: log_file)
         end
         run_docker(["rm", "-f", server])

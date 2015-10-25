@@ -1,7 +1,5 @@
 # To do
 
-* Don't write test logs to local directory
-
 * Stop containers when tests fail
 
 * Don't fail in `down` command when some containers already are down
