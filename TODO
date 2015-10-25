@@ -1,7 +1,12 @@
 # To do
 
+* Unstub binary after use in integration tests
+
+* Don't write test logs to local directory
+
+* Stop containers when tests fail
+
 * Don't fail in `down` command when some containers already are down
 * Don't fail in `up` command when some containers already are up
-
 
 * Don't recreate certificates when they are already there
