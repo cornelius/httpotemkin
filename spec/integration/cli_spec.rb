@@ -107,11 +107,11 @@ Hopss
 Hopss
 ---- End Test ----
 docker logs rubygems
-docker rm -f rubygems
+'rubygems' already down
 docker logs api.rubygems
-docker rm -f api.rubygems
+'api.rubygems' already down
 docker logs obs
-docker rm -f obs
+'obs' already down
 
 Success.
         EOT
@@ -134,11 +134,11 @@ docker run --link=rubygems:rubygems.org --link=api.rubygems:api.rubygems.org --l
 error
 ---- End Test ----
 docker logs rubygems
-docker rm -f rubygems
+'rubygems' already down
 docker logs api.rubygems
-docker rm -f api.rubygems
+'api.rubygems' already down
 docker logs obs
-docker rm -f obs
+'obs' already down
 
 Failed.
 
