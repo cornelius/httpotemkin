@@ -69,7 +69,11 @@ module Httpotemkin
           log_file = File.open(File.join(@log_dir,"#{server}.log"), "w")
           run_docker(["logs", server], stderr: log_file)
         end
-        run_docker(["rm", "-f", server])
+        if status[server]
+          run_docker(["rm", "-f", server])
+        else
+          @out.puts "'#{server}' already down"
+        end
       end
     end
 

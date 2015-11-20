@@ -1,7 +1,5 @@
 # To do
 
-* Don't fail in `down` command when some containers already are down
-
 * Implement what's needed for testing of yes_ship_it
 
 * Don't recreate certificates when they are already there

@@ -64,8 +64,7 @@ docker rm -f rubygems
 rubygems
 docker rm -f api.rubygems
 api.rubygems
-docker rm -f obs
-obs
+'obs' already down
         EOT
         expect(run_command(args: ["down"])).to exit_with_success(expected_output)
       end

@@ -1,3 +1,8 @@
 #!/usr/bin/ruby
 
-puts ARGV[2]
+if ARGV[0] == "ps"
+  puts "rubygems"
+  puts "api.rubygems"
+else
+  puts ARGV[2]
+end
