@@ -1,5 +1,5 @@
 require "cheetah"
-
+require "terminal-table"
 require_relative "containers"
 require_relative "test"
 require_relative "client"

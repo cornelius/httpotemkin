@@ -33,9 +33,13 @@ module Httpotemkin
 
     def print_status
       running = `docker ps --format="{{.Names}}"`.split("\n")
-      @servers.each do |server|
-        @out.puts "  #{server}: #{running.include?(server) ? "up" : "down"}"
+      table = Terminal::Table.new(headings: ["Container", "Status"]) do |t|
+        @servers.each do |server|
+          t.add_row([server, running.include?(server) ? "up" : "down"])
+        end
       end
+
+      @out.puts table
     end
 
     def up

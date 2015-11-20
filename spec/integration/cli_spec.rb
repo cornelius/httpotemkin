@@ -27,11 +27,14 @@ Commands:
     it "shows status" do
       with_stubbed_binary("bin/status/docker") do
         expected_output = <<-EOT
-Status:
-  rubygems: up
-  api.rubygems: down
-  obs: up
-        EOT
++--------------+--------+
+| Container    | Status |
++--------------+--------+
+| rubygems     | up     |
+| api.rubygems | down   |
+| obs          | up     |
++--------------+--------+
+EOT
         expect(run_command(args: ["status"])).to exit_with_success(expected_output)
       end
     end

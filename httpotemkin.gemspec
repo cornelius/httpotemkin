@@ -15,6 +15,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'given_filesystem', '>= 0.1.2'
   s.add_development_dependency 'cli_tester', '>= 0.0.2'
 
+  s.add_runtime_dependency 'terminal-table', '~> 1.5'
+
   s.files        = `git ls-files`.split("\n")
   s.require_path = 'lib'
 end

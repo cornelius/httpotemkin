@@ -10,7 +10,6 @@ containers.add_server("obs")
 cmd = ARGV[0]
 
 if cmd == "status"
-  puts "Status:"
   containers.print_status
 elsif cmd == "up"
   puts "Starting server containers"
