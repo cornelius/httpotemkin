@@ -45,8 +45,8 @@ EOT
       with_stubbed_binary("bin/up/docker") do
         expected_output = <<-EOT
 Starting server containers
-'rubygems' already running
-'api.rubygems' already running
+'rubygems' already up
+'api.rubygems' already up
 docker run --name=obs -d obs
 123
         EOT

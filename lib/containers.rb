@@ -56,7 +56,7 @@ module Httpotemkin
     def up
       @servers.each do |server|
         if status[server]
-          @out.puts "'#{server}' already running"
+          @out.puts "'#{server}' already up"
         else
           run_docker(["run", "--name=#{server}", "-d", server])
         end
