@@ -1,7 +1,6 @@
 # To do
 
 * Don't fail in `down` command when some containers already are down
-* Don't fail in `up` command when some containers already are up
 
 * Implement what's needed for testing of yes_ship_it
 

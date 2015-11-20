@@ -43,17 +43,23 @@ module Httpotemkin
     end
 
     def status
-      running = `docker ps --format="{{.Names}}"`.split("\n")
-      status = {}
-      @servers.each do |server|
-        status[server] = running.include?(server)
+      @status ||= {}
+      if @status.empty?
+        running = `docker ps --format="{{.Names}}"`.split("\n")
+        @servers.each do |server|
+          @status[server] = running.include?(server)
+        end
       end
-      status
+      @status
     end
 
     def up
       @servers.each do |server|
-        run_docker(["run", "--name=#{server}", "-d", server])
+        if status[server]
+          @out.puts "'#{server}' already running"
+        else
+          run_docker(["run", "--name=#{server}", "-d", server])
+        end
       end
     end
 
