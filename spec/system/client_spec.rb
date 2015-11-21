@@ -8,7 +8,7 @@ describe "client" do
     test = Httpotemkin::Test.new(out: out)
 
     test.run do |client|
-      client.inject_tarball("data/test.tar.gz")
+      client.inject_tarball("spec/system/data/test.tar.gz")
 
       client.execute(["ls", "test"])
 
@@ -16,7 +16,7 @@ describe "client" do
       expect(client.out).to eq("mydir\nmyfile\n")
       expect(client.err.empty?).to be(true)
 
-      client.execute(["ls", "test(mydir"])
+      client.execute(["ls", "test/mydir"])
 
       expect(client.exit_code).to eq(0)
       expect(client.out).to eq("myotherfile1\nmyotherfile2\n")

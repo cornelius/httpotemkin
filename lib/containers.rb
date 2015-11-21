@@ -78,7 +78,11 @@ module Httpotemkin
     end
 
     def start_client
-      run_docker(["run", links, "--name=client", "-d", "client"])
+      if links.empty?
+        run_docker(["run", "--name=client", "-d", "client"])
+      else
+        run_docker(["run", links, "--name=client", "-d", "client"])
+      end
     end
 
     def stop_client

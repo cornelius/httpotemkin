@@ -19,5 +19,9 @@ module Httpotemkin
     def err
       ""
     end
+
+    def inject_tarball(filename)
+      Cheetah.run(["cat", filename], ["docker", "cp", "-", "client:/"])
+    end
   end
 end
