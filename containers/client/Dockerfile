@@ -1,9 +1,13 @@
 FROM opensuse
 MAINTAINER Cornelius Schumacher <schumacher@kde.org>
 
+run zypper --non-interactive install  ca-certificates-mozilla
+
 RUN zypper --non-interactive install curl
 RUN zypper --non-interactive install ruby
 RUN zypper --non-interactive install --no-recommends osc
+
+RUN gem install inifile
 
 COPY oscrc /root/.oscrc
 
