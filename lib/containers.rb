@@ -81,7 +81,7 @@ module Httpotemkin
       if links.empty?
         run_docker(["run", "--name=client", "-d", "client", "sleep", "infinity"])
       else
-        run_docker(["run", links, "--name=client", "-d", "client", "sleep", "infinity"])
+        run_docker(["run"] + links + ["--name=client", "-d", "client", "sleep", "infinity"])
       end
     end
 
@@ -89,14 +89,19 @@ module Httpotemkin
       run_docker(["rm", "-f", "client"])
     end
 
-    def exec_client(client_cmd)
-      cmd = ["docker", "exec", "client"] + client_cmd
+    def exec_client(client_cmd, working_directory: nil)
+      cmd = ["docker", "exec", "client"]
+      if working_directory
+        cmd += ["sh", "-c", "cd #{working_directory}; #{client_cmd.join(' ')}"]
+      else
+        cmd += client_cmd
+      end
       @out.puts cmd.join(" ")
       Cheetah.run(cmd, stdout: :capture)
     end
 
     def links
-      @servers.map { |name| "--link=#{name}:#{host_name(name)}" }.join(" ")
+      @servers.map { |name| "--link=#{name}:#{host_name(name)}" }
     end
 
     def run_client

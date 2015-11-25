@@ -4,8 +4,8 @@ module Httpotemkin
       @containers = containers
     end
 
-    def execute(cmd)
-      @out = @containers.exec_client(cmd)
+    def execute(cmd, working_directory: nil)
+      @out = @containers.exec_client(cmd, working_directory: working_directory)
     end
 
     def exit_code

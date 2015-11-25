@@ -52,4 +52,19 @@ describe "client" do
       expect(client.err.empty?).to be(true)
     end
   end
+
+  it "executes command in custom working directory" do
+    out = double
+    allow(out).to receive(:puts)
+
+    test = Httpotemkin::Test.new(out: out)
+
+    test.run do |client|
+      client.execute(["ls"], working_directory: "/srv")
+
+      expect(client.exit_code).to eq(0)
+      expect(client.out).to eq("ftp\nwww\n")
+      expect(client.err.empty?).to be(true)
+    end
+  end
 end
