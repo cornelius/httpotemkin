@@ -105,7 +105,7 @@ module Httpotemkin
     end
 
     def run_client
-      cmd = "docker run #{links} client"
+      cmd = "docker run #{links.join(" ")} client"
       @out.puts cmd
       `#{cmd}`
     end
