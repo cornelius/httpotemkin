@@ -7,10 +7,11 @@ RUN zypper --non-interactive install ca-certificates-mozilla
 RUN zypper --non-interactive install curl
 RUN gem install --no-document sinatra thin
 
-COPY server.rb /
-COPY secure_server.rb /
+COPY server_base.rb /httpotemkin/server/
+COPY secure_server.rb /httpotemkin/server/
+COPY server.rb /httpotemkin/server/
 
-CMD /server.rb -p 80
+CMD /httpotemkin/server/server.rb -p 80
 
 EXPOSE 80
 EXPOSE 443

@@ -1,8 +1,9 @@
 FROM server
 MAINTAINER Cornelius Schumacher <schumacher@kde.org>
 
-COPY server.crt /
-COPY server.key /
+COPY secure_server.rb /httpotemkin/obs/
+COPY server.crt /httpotemkin/obs/
+COPY server.key /httpotemkin/obs/
 
 CMD /secure_server.rb
 

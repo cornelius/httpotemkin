@@ -2,12 +2,12 @@
 
 require "sinatra"
 
-require_relative "server_base.rb"
+require_relative "../server/server_base.rb"
 
 CERT_DIR = File.dirname(__FILE__)
 
 configure_sinatra
 
 get '/' do
-  "I'm the secure base server\n"
+  "I'm the secure rubygems server\n"
 end

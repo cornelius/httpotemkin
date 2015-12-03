@@ -1,9 +1,10 @@
 FROM server
 MAINTAINER Cornelius Schumacher <schumacher@kde.org>
 
-COPY server.crt /
-COPY server.key /
+COPY secure_server.rb /httpotemkin/api.rubygems/
+COPY server.crt /httpotemkin/api.rubygems/
+COPY server.key /httpotemkin/api.rubygems/
 
-CMD /secure_server.rb
+CMD /httpotemkin/api.rubygems/secure_server.rb
 
 EXPOSE 443
