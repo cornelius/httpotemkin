@@ -9,7 +9,9 @@ containers.add_server("obs")
 
 cmd = ARGV[0]
 
-if cmd == "status"
+if cmd == "version"
+  puts Httpotemkin::VERSION
+elsif cmd == "status"
   containers.print_status
 elsif cmd == "up"
   puts "Starting server containers"

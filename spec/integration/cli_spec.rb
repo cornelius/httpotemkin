@@ -23,6 +23,12 @@ Commands:
     end
   end
 
+  describe "version" do
+    it "shows version" do
+      expect(run_command(args: ["version"])).to exit_with_success("#{Httpotemkin::VERSION}\n")
+    end
+  end
+
   describe "status" do
     it "shows status" do
       with_stubbed_binary("bin/status/docker") do
