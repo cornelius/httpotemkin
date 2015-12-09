@@ -19,5 +19,19 @@ module Httpotemkin
         @containers.down
       end
     end
+
+    def up
+      @containers.up
+    end
+
+    def down
+      @containers.stop_client
+      @containers.down
+    end
+
+    def run_client
+      @containers.start_client
+      Client.new(@containers)
+    end
   end
 end
