@@ -11,11 +11,11 @@ describe "hello world" do
 
       test.run do |client|
         sleep 2
-        client.execute(["curl", "server/hello"])
+        client.execute(["curl", "-s", "server/hello"])
 
         expect(client.exit_code).to eq(0)
         expect(client.out).to eq("world\n")
-        expect(client.err.empty?).to be(true)
+        expect(client.err).to eq("")
       end
     end
   end
@@ -31,19 +31,19 @@ describe "hello world" do
     end
 
     it "answers once" do
-      @client.execute(["curl", "server/hello"])
+      @client.execute(["curl", "-s", "server/hello"])
 
       expect(@client.exit_code).to eq(0)
       expect(@client.out).to eq("world\n")
-      expect(@client.err.empty?).to be(true)
+      expect(@client.err).to eq("")
     end
 
     it "answers twice" do
-      @client.execute(["curl", "server/hello"])
+      @client.execute(["curl", "-s", "server/hello"])
 
       expect(@client.exit_code).to eq(0)
       expect(@client.out).to eq("world\n")
-      expect(@client.err.empty?).to be(true)
+      expect(@client.err).to eq("")
     end
 
     after(:all) do
