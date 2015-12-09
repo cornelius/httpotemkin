@@ -26,17 +26,24 @@ describe "hello world" do
       @test = Httpotemkin::Test.new(out: out)
       @test.add_server("server")
       @test.up
+      @client = @test.start_client
       sleep 2
     end
 
-    it "answers" do
-      client = @test.run_client
+    it "answers once" do
+      @client.execute(["curl", "server/hello"])
 
-      client.execute(["curl", "server/hello"])
+      expect(@client.exit_code).to eq(0)
+      expect(@client.out).to eq("world\n")
+      expect(@client.err.empty?).to be(true)
+    end
 
-      expect(client.exit_code).to eq(0)
-      expect(client.out).to eq("world\n")
-      expect(client.err.empty?).to be(true)
+    it "answers twice" do
+      @client.execute(["curl", "server/hello"])
+
+      expect(@client.exit_code).to eq(0)
+      expect(@client.out).to eq("world\n")
+      expect(@client.err.empty?).to be(true)
     end
 
     after(:all) do

@@ -29,7 +29,7 @@ module Httpotemkin
       @containers.down
     end
 
-    def run_client
+    def start_client
       @containers.start_client
       Client.new(@containers)
     end
