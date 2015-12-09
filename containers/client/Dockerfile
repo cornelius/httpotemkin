@@ -27,4 +27,8 @@ RUN mkdir /root/.gem
 RUN echo ":rubygems_api_key: 123" >/root/.gem/credentials
 RUN chmod 0600 /root/.gem/credentials
 
+# Configuration for git
+RUN git config --global user.email "hw@example.com"
+RUN git config --global user.name "Hans Wurst"
+
 CMD /run_test.rb
