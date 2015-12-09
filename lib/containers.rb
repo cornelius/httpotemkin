@@ -97,7 +97,15 @@ module Httpotemkin
         cmd += client_cmd
       end
       @out.puts cmd.join(" ")
-      Cheetah.run(cmd, stdout: :capture)
+      begin
+        out, err = Cheetah.run(cmd, stdout: :capture, stderr: :capture)
+        exit_code = 0
+      rescue Cheetah::ExecutionFailed => e
+        out = e.stdout
+        err = e.stderr
+        exit_code = e.status.exitstatus
+      end
+      return out, err, exit_code
     end
 
     def links

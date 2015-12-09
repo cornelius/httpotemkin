@@ -67,4 +67,19 @@ describe "client" do
       expect(client.err.empty?).to be(true)
     end
   end
+
+  it "captures stderr" do
+    out = double
+    allow(out).to receive(:puts)
+
+    test = Httpotemkin::Test.new(out: out)
+
+    test.run do |client|
+      client.execute(["ls", "iamnothere"])
+
+      expect(client.exit_code).to eq(2)
+      expect(client.out).to eq("")
+      expect(client.err).to eq("ls: cannot access iamnothere: No such file or directory\n")
+    end
+  end
 end

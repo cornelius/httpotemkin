@@ -1,23 +1,13 @@
 module Httpotemkin
   class Client
+    attr_reader :out, :err, :exit_code
+
     def initialize(containers)
       @containers = containers
     end
 
     def execute(cmd, working_directory: nil)
-      @out = @containers.exec_client(cmd, working_directory: working_directory)
-    end
-
-    def exit_code
-      0
-    end
-
-    def out
-      @out
-    end
-
-    def err
-      ""
+      @out, @err, @exit_code = @containers.exec_client(cmd, working_directory: working_directory)
     end
 
     def inject_tarball(filename)
