@@ -1,6 +1,8 @@
+require File.expand_path("../lib/version", __FILE__)
+
 Gem::Specification.new do |s|
   s.name        = 'httpotemkin'
-  s.version     = '0.0.1'
+  s.version     = Httpotemkin::VERSION
   s.license     = 'MIT'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Cornelius Schumacher']
