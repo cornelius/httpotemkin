@@ -1,5 +1,9 @@
 # Change log of httpotemkin
 
+## Version 0.0.3
+
+* Capture stderr and exit code when running commands on the client
+
 ## Version 0.0.2
 
 * Support running servers and clients separate from executing the test. This
