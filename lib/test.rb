@@ -33,5 +33,9 @@ module Httpotemkin
       @containers.start_client
       Client.new(@containers)
     end
+
+    def stop_client
+      @containers.stop_client
+    end
   end
 end

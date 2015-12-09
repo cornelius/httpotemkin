@@ -82,4 +82,13 @@ describe "client" do
       expect(client.err).to eq("ls: cannot access iamnothere: No such file or directory\n")
     end
   end
+
+  it "starts and stops the client container" do
+    out = double
+    allow(out).to receive(:puts)
+
+    test = Httpotemkin::Test.new(out: out)
+    test.start_client
+    test.stop_client
+  end
 end
