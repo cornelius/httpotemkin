@@ -1,5 +1,9 @@
 # Change log of httpotemkin
 
+## Version 0.0.4
+
+* Add command to stop client container in RSpec tests
+
 ## Version 0.0.3
 
 * Capture stderr and exit code when running commands on the client
