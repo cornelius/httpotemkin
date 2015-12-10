@@ -1,5 +1,10 @@
 # Change log of httpotemkin
 
+## Version 0.0.5
+
+* Don't try to stop client in `down` method
+* Add dependencies for yes_ship_it
+
 ## Version 0.0.4
 
 * Add command to stop client container in RSpec tests
