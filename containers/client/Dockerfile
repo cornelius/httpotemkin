@@ -1,14 +1,15 @@
 FROM opensuse:42.1
 MAINTAINER Cornelius Schumacher <schumacher@kde.org>
 
-run zypper --non-interactive install  ca-certificates-mozilla
+RUN zypper --non-interactive install  ca-certificates-mozilla
 
 RUN zypper --non-interactive install curl
 RUN zypper --non-interactive install ruby
 RUN zypper --non-interactive install --no-recommends osc
+RUN zypper --non-interactive install tar
 
 # Dependencies for yes_ship_it
-RUN zypper --non-interactive install ruby2.1-rubygem-inifile ruby2.1-rubygem-rest-client
+RUN zypper --non-interactive install ruby2.1-rubygem-inifile ruby2.1-rubygem-rest-client ruby2.1-rubygem-cheetah
 RUN zypper --non-interactive install git
 
 # Configuration for OBS client
