@@ -25,7 +25,6 @@ module Httpotemkin
     end
 
     def down
-      @containers.stop_client
       @containers.down
     end
 
