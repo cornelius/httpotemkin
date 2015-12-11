@@ -19,3 +19,7 @@ end
 put '/source/home:cschum:go/red_herring/red_herring-0.0.2.tar.gz' do
   "xx"
 end
+
+put '/source/home:cschum:go/red_herring/red_herring.spec' do
+  "xx"
+end

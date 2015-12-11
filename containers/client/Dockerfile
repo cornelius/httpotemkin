@@ -31,5 +31,7 @@ RUN chmod 0600 /root/.gem/credentials
 # Configuration for git
 RUN git config --global user.email "hw@example.com"
 RUN git config --global user.name "Hans Wurst"
+RUN git config --global receive.denyCurrentBranch ignore
+RUN git config --global push.default simple
 
 CMD /run_test.rb
