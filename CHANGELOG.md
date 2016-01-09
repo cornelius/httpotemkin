@@ -1,5 +1,9 @@
 # Change log of httpotemkin
 
+## Version 0.0.6
+
+* Add API endpoints of OBS for testing pushing RPMs in yes_ship_it
+
 ## Version 0.0.5
 
 * Don't try to stop client in `down` method
