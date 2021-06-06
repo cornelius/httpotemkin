@@ -1,4 +1,4 @@
-FROM opensuse:42.1
+FROM opensuse/leap
 MAINTAINER Cornelius Schumacher <schumacher@kde.org>
 
 RUN zypper --non-interactive install  ca-certificates-mozilla
@@ -9,8 +9,10 @@ RUN zypper --non-interactive install --no-recommends osc
 RUN zypper --non-interactive install tar
 
 # Dependencies for yes_ship_it
-RUN zypper --non-interactive install ruby2.1-rubygem-inifile ruby2.1-rubygem-rest-client ruby2.1-rubygem-cheetah
+RUN zypper --non-interactive install ruby2.5-rubygem-rest-client ruby2.5-rubygem-cheetah
+RUN gem install inifile
 RUN zypper --non-interactive install git
+RUN zypper --non-interactive install gzip
 
 # Configuration for OBS client
 COPY oscrc /root/.oscrc
@@ -24,7 +26,6 @@ RUN update-ca-certificates
 COPY run_test.rb /run_test.rb
 
 # Configuration for gem
-RUN mkdir /root/.gem
 RUN echo ":rubygems_api_key: 123" >/root/.gem/credentials
 RUN chmod 0600 /root/.gem/credentials
 

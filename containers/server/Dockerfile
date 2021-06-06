@@ -1,4 +1,4 @@
-FROM opensuse
+FROM opensuse/leap
 MAINTAINER Cornelius Schumacher <schumacher@kde.org>
 
 RUN zypper --non-interactive install ruby
